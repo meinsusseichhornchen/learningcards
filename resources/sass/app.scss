@@ -1,0 +1,27 @@
+@tailwind base;
+
+@font-face {
+  font-family: Metropolis-Regular;
+  font-style: normal;
+  src:  url('/fonts/Metropolis/Webfonts/EOT/Metroplis-Regular.eot') format('eot'),
+        url('/fonts/Metropolis/Webfonts/WOFF/Metropolis-Regular.woff') format('woff'),
+        url('/fonts/Metropolis/Webfonts/WOFF2/Metropolis-Regular.woff2') format('woff2'),
+        url('/fonts/Metropolis/TrueType/Metropolis-Regular.ttf') format('truetype');
+}
+
+h1 {
+  @apply text-3xl;
+  @apply text-hiro;
+  @apply mb-6;
+}
+
+h2 {
+  @apply text-2xl;
+  @apply mb-4;
+  @apply font-display;
+}
+
+@tailwind components;
+@tailwind utilities;
+
+@import 'main';

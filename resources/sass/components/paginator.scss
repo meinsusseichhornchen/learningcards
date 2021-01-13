@@ -1,0 +1,35 @@
+.paginator {
+    margin: 1em;
+
+    &__item {
+        .paginator__item-link {
+            display: none;
+
+            .active {
+                @include flexbox();
+            }
+
+            @screen sm {
+                @include flexbox();
+            }
+        }
+    }
+
+    .active {
+        transition: transform .5s;
+        position: relative;
+        z-index: 1;
+
+        &:after {
+            content: "";
+            background: get-color(hiro);
+            display: block;
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            top: 6px;
+            border-radius: 999px;
+            z-index: -1;
+        }
+    }
+}

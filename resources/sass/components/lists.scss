@@ -1,0 +1,72 @@
+.accordion-list {
+  background: get-color(hiro, lightest);
+}
+
+.card-list {
+  @include flexbox();
+
+  &__item {
+    position: relative;
+    border-radius: 10px;
+    margin: 8px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
+
+    > a {
+      height: 200px;
+      width: 100%;
+
+      @include flexbox();
+      @include justify-content(center);
+      @include align-items(center);
+      @include flex-direction(column);
+    }
+  }
+
+  &__content {
+    margin: 1em;
+    overflow: hidden;
+    font-size: 1.25rem;
+
+    @include flexbox();
+    @include align-items(center);
+
+    @include prefix((
+      text-overflow: ellipsis,
+    ), ms webkit);
+  }
+
+  &__del-btn {
+    border-radius: 999px;
+    border: 2px solid get-color(cultured, darker);
+    cursor: pointer;
+    position: absolute;
+    margin: 0.25em;
+    top: 0;
+    right: 0;
+    color: get-color(cultured, darker);
+
+    @include prefix((
+      transition: background 0.4s ease-in-out,
+    ), ms webkit);
+
+    @include prefix((
+            transition: color 0.2s ease-in-out,
+    ), ms webkit);
+
+    &:hover, &:active {
+      color: get-color(white);
+      background: get-color(cultured, darker);
+    }
+  }
+
+  &__add-btn {
+    height: 100%;
+    width: 100%;
+    color: get-color(cultured, darker);
+
+    @include flexbox();
+    @include justify-content(center);
+    @include align-items(center);
+    @include flex-direction(column);
+  }
+}

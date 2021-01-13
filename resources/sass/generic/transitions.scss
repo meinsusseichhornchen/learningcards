@@ -1,0 +1,60 @@
+@keyframes slide-left {
+  0% {
+    opacity: 0;
+    @include prefix((
+          transform: translateX(-100px)
+    ))
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fade {
+  &-enter, &-leave-to {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    margin: 0;
+    padding: 0;
+  }
+
+  &-enter-to, &-leave {
+    opacity: 1;
+  }
+
+  &-enter-active, &-leave-active {
+    @include prefix((
+      transition: opacity .3s ease-in-out,
+    ), webkit moz);
+  }
+
+  &-enter-active {
+    @include prefix((
+      transition-delay: .5s
+    ), moz webkit);
+  }
+}
+
+.modal {
+  &-enter, &-leave-active {
+    opacity: 0;
+  }
+
+  .modal-enter .modal_container,
+  .modal-leave-active .modal-container {
+    @include prefix((
+      transform: scale(1.1),
+    ), webkit)
+  }
+}
+
+.slide {
+  &-left {
+    &-enter-active {
+      animation: slide-left .5s;
+    }
+  }
+}

@@ -1,0 +1,685 @@
+%remove-arrow-select {
+  @include prefix((
+    appearance: none,
+  ), webkit moz);
+
+  &::-ms-expand {
+    display: none;
+  }
+}
+
+%hide-input {
+  // Accessibility
+  width: 0.1px;
+  height: 0.1px;
+
+  opacity: 0;
+  z-index: -1;
+}
+
+%truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Text Input */
+
+span.ci-text {
+  position: relative;
+/*  max-width: 350px;*/
+  z-index: 1;
+  display: inline-block;
+  margin: 1em;
+  width: calc(100% - 2em);
+  vertical-align: top;
+
+  .input__field {
+    position: relative;
+    display: block;
+    float: right;
+    padding: 0.8em;
+    border: none;
+    border-radius: 0;
+    font-weight: bold;
+    -webkit-appearance: none;
+  }
+
+  .input__label {
+    display: inline-block;
+    float: right;
+    padding: 0 1em;
+    width: 4%;
+    font-size: 70.25%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-touch-callout: none;
+
+    @include prefix((
+      user-select: none,
+    ), khtml moz ms webkit);
+
+    &-content {
+      position: relative;
+      display: block;
+      padding: 1.6em 0;
+      width: 100%;
+    }
+  }
+
+  &.ci-skin {
+    &-underline {
+      &.input--filled .input__label .input__label-content {
+        color: get-color(corn);
+        transform: translate3d(0, 2em, 0) scale3d(0.655, 0.655, 1);
+        -webkit-transform: translate3d(0, 2em, 0) scale3d(0.655, 0.655, 1);
+
+        &--failed {
+          color: get-color(failed);
+        }
+      }
+
+      .input__field {
+        width: 100%;
+        background: transparent;
+        padding: 0.5em 0;
+        margin-bottom: 2em;
+        color: get_color(hiro);
+
+        &:focus + .input__label:after, .input--filled .input__label:after {
+            background: get-color(corn);
+
+            @include prefix((
+              transform: scale3d(1, 0.25, 1),
+            ), webkit);
+        }
+
+        &.input--failed:focus + .input__label:after, &.input--failed .input__label::after {
+          background: get-color(failed);
+
+          @include prefix((
+                  transform: scale3d(1, 0.25, 1),
+          ), webkit);
+        }
+
+        &:focus + .input__label .input__label-content {
+          color: get-color(corn);
+          transform: translate3d(0, 2em, 0) scale3d(0.655, 0.655, 1);
+          -webkit-transform: translate3d(0, 2em, 0) scale3d(0.655, 0.655, 1);
+        }
+
+        &.input--failed + .input__label .input__label-content {
+          color: get-color(failed);
+        }
+        &.input--failed + .input__label:after {
+          background: get-color(failed);
+        }
+      }
+
+      .input__label {
+        width: 100%;
+        position: absolute;
+        text-align: left;
+        font-size: 1em;
+        padding: 10px 0 2px;
+        pointer-events: none;
+
+        &:after {
+          content: '';
+          position: absolute;
+          width: 100%;
+          height: 4px;
+          background: get-color(hiro);
+          left: 0;
+          top: 100%;
+          transition: transform 0.3s, background-color 0.3s;
+          -webkit-transition: -webkit-transform 0.3s, background-color 0.3s;
+
+          @include prefix((
+            transform-origin: 50% 100%,
+          ), webkit);
+        }
+
+        &-content {
+          padding: 0;
+          transition: transform 0.3s, color 0.3s;
+          -webkit-transition: -webkit-transform 0.3s, color 0.3s;
+          @extend %truncate-text;
+
+          @include prefix((
+            transform-origin: 0 0,
+          ), webkit);
+        }
+      }
+    }
+  }
+
+  .input__add-btn, .input__delete-btn {
+    @include flexbox();
+
+    width: auto;
+    position: absolute;
+    right: 0;
+    padding: 10px 0 2px;
+    margin: 0;
+
+    svg {
+      color: get-color(cultured, darker);
+      margin: 0;
+    }
+  }
+}
+
+.input__add-btn {
+  $width: 40px;
+  $height: 40px;
+  margin: 1em;
+
+  color: get-color(white);
+  width: $width;
+  height: $height;
+
+  svg {
+    width: $width / 2;
+    height: $height / 2;
+    margin: 0 auto;
+  }
+}
+
+/* Textarea Inputs */
+span.ci-textarea {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  margin: 1em;
+  width: calc(100% - 2em);
+  vertical-align: top;
+
+  .input__field {
+    display: block;
+    resize: none;
+    float: right;
+    border: none;
+    position: relative;
+    border-radius: 0;
+    padding: 0.8em;
+    font-weight: bold;
+    -webkit-appearance: none;
+  }
+
+  .input__label {
+    display: inline-block;
+    float: right;
+    padding: 0 1em;
+    width: 4%;
+    font-size: 70.25%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-touch-callout: none;
+
+    @include prefix((
+            user-select: none,
+    ), khtml moz ms webkit);
+
+    &-content {
+      position: relative;
+      display: block;
+      padding: 1.6em 0;
+      width: 100%;
+    }
+  }
+
+  &.ci-skin {
+    &-underline {
+      $input-height: 200px;
+
+      &.input--filled {
+        .input__label {
+          .input__label-content {
+            color: get-color(hiro);
+            transform: translate3d(0, $input-height - 5px, 0) scale3d(0.655, 0.655, 1);
+            -webkit-transform: translate3d(0, $input-height - 5px, 0) scale3d(0.655, 0.655, 1);
+          }
+        }
+      }
+
+      .input__field {
+        height: $input-height;
+        width: 100%;
+        background: transparent;
+        padding: 0.5em 0;
+        border-bottom: 4px solid get-color(hiro);
+
+        &:focus {
+          transition: transform 0.3s, border 0.3s;
+          -webkit-transition: -webkit-transform 0.3s, border 0.3s;
+          border-bottom-width: 1px;
+          border-color: get-color(corn);
+
+          & + .input__label .input__label-content {
+            color: get-color(corn);
+            transform: translate3d(0, $input-height - 5px, 0) scale3d(0.655, 0.655, 1);
+            -webkit-transform: translate3d(0, $input-height - 5px, 0) scale3d(0.655, 0.655, 1);
+          }
+        }
+      }
+
+      .input__label {
+        width: 100%;
+        position: absolute;
+        text-align: left;
+        font-size: 1em;
+        padding: 10px 0 2px;
+        color: get-color(hiro, ligthest);
+        pointer-events: none;
+
+        &-content {
+          padding: 0;
+          -webkit-transition: -webkit-transform 0.3s, color 0.3s;
+          transition: transform 0.3s, color 0.3s;
+          transform-origin: 0 0;
+        }
+      }
+
+      .input__word-counter {
+        float: right;
+        color: get-color(hiro);
+      }
+    }
+  }
+}
+
+
+
+/* Select Input */
+
+span.cs-select {
+  z-index: 1;
+  display: inline-block;
+  margin: 1em;
+  width: calc(100% - 2em);
+  vertical-align: top;
+
+  &.cs-skin-underline {
+    .select__wrapper {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+
+      select {
+        width: 100%;
+        position: relative;
+        background: transparent;
+        z-index: 1000;
+        text-align: left;
+        font-size: 1em;
+        padding: 10px 0 2px;
+        color: get-color(hiro, lightest);
+        @extend %remove-arrow-select;
+      }
+
+      select.active + .select__arrow {
+        @include prefix((
+          transform: scaleY(-1),
+        ), webkit moz);
+
+        transition: transform 0.5s;
+        -webkit-transition: -webkit-transform 0.5s;
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 4px;
+        background: get-color(hiro);
+        left: 0;
+        top: 100%;
+        transition: transform 0.3s, background-color 0.3s;
+        -webkit-transition: -webkit-transform 0.3s, background-color 0.3s;
+      }
+
+      .select__arrow {
+        $arrow-width: 30px;
+        z-index: 1;
+        width: $arrow-width;
+        position: absolute;
+        right: 0;
+        top: 7px;
+        transition: transform 0.5s;
+        -webkit-transition: -webkit-transform 0.5s;
+      }
+    }
+  }
+}
+
+
+/* Buttons */
+button.ci-skin {
+  &-action {
+    background: get-color(hiro);
+    color: get-color(white);
+  }
+}
+
+
+/* Checkable Inputs */
+
+div.ci-pills {
+  position: relative;
+  @include flexbox();
+  @include flex-wrap(wrap);
+  @include justify-content(center);
+
+  .ci-pills-inputs {
+    @include flexbox();
+    @include align-items(center);
+    @include flex-wrap(wrap);
+    margin: 1em 5px 1em 0;
+
+    .ci-pills-item {
+
+      input[type="checkbox"] {
+        visibility: hidden;
+        display: none;
+        width: 0;
+        height: 0;
+
+        & + label {
+          background: get-color(white);
+          color: get-color(hiro, lightest);
+          border: 1px solid get-color(hiro, lightest);
+          max-width: 250px;
+          margin: 5px;
+          padding: 0.6em;
+          display: inline-block;
+        }
+
+        &:checked + label {
+          background-color: get-color(hiro);
+          color: get-color(white);
+          border: 1px solid rgba(0, 0, 0, 0);
+        }
+      }
+
+      label {
+        cursor: pointer;
+        @include prefix((
+                transition: background-color 0.5s,
+        ));
+      }
+    }
+  }
+
+  div.ci-pills-add-form {
+    position: relative;
+    @include flexbox();
+    @include align-items(center);
+    margin: 1em 0 1em 5px;
+
+    .ci-pills-add-form__group {
+      position: relative;
+      display: inline-block;
+      max-width: 250px;
+
+      &.input--filled .input__label .input__label-content {
+        transform: translate3d(0, 2em, 0) scale3d(0.655, 0.655, 1);
+        -webkit-transform: translate3d(0, 2em, 0) scale3d(0.655, 0.655, 1);
+      }
+
+      .input__field {
+        width: 100%;
+        position: relative;
+        float: right;
+        background: transparent;
+        padding: 0.5em 0;
+        border-radius: 0;
+        display: block;
+        color: get-color(hiro, ligthest);
+
+        @include prefix((
+                appearance: none
+        ), webkit moz);
+
+        &:focus + .input__label .input__label-content {
+          color: get-color(hiro);
+          transform: translate3d(0, 2em, 0) scale3d(0.655, 0.655, 1);
+          -webkit-transform: translate3d(0, 2em, 0) scale3d(0.655, 0.655, 1);
+        }
+
+        &.input--failed + .input__label .input__label-content {
+          color: get-color(failed);
+        }
+        &.input--failed + .input__label:after {
+          background: get-color(failed)!important;
+        }
+      }
+
+      .input__field.input--failed + .input__label .input__label-content {
+        color: get-color(failed);
+      }
+
+      .input__label {
+        width: 100%;
+        position: absolute;
+        text-align: left;
+        font-size: 1em;
+        padding: 10px 0 2px;
+        pointer-events: none;
+        color: get-color(hiro, lightest);
+
+        &:after {
+          content: "";
+          position: absolute;
+          display: inline-block;
+          width: 100%;
+          height: 4px;
+          left: 0;
+          top: 100%;
+          background: get-color(hiro, lightest);
+          transition: transform 0.3s, background-color 0.3s;
+          -webkit-transition: -webkit-transform 0.3s, background-color 0.3s;
+        }
+
+        .input__label-content {
+          padding: 0;
+          display: block;
+          transform-origin: 0 0;
+          transition: transform 0.3s, color 0.3s;
+          -webkit-transition: -webkit-transform 0.3s, color 0.3s;
+          position: relative;
+          color: get-color(hiro, lightest);
+          @extend %truncate-text;
+        }
+      }
+    }
+
+    .ci-pills-add-form-btn {
+      $width: 40px;
+      $height: 40px;
+      margin-left: 5px;
+
+      color: get-color(white);
+      width: $width;
+      height: $height;
+
+      svg {
+        width: $width / 2;
+        height: $height / 2;
+        margin: 0 auto;
+      }
+    }
+
+  }
+
+  .ci-pills-add {
+    @include flexbox();
+
+    .ci-pills-add-input {
+      margin-bottom: 2em;
+
+      input {
+        position: relative;
+        top: 10px;
+      }
+
+      &:after {
+
+      }
+    }
+  }
+
+  .ci-pills-errors {
+
+  }
+}
+
+/* File Inputs */
+
+div.ci-file {
+  margin: 1em;
+
+  .input__field {
+    display: none;
+  }
+
+  .input__label {
+    background: get-color(hiro, lighter);
+    color: get-color(white);
+    padding: 0.5em;
+    cursor: pointer;
+
+    &-content {
+
+    }
+
+    &-icon {
+      width: 20px;
+      margin-left: 0.25em;
+    }
+  }
+
+  .ci-file__preview {
+    position: relative;
+    display: inline-block;
+    padding: 1em;
+    overflow: hidden;
+    width: 100%;
+
+    img {
+      margin: 0 auto;
+      max-height: 165px;
+    }
+
+    .ci-file__close-btn {
+      transition: transform 0.3s, color 0.3s;
+      -webkit-transition: -webkit-transform 0.3s, color 0.3s;
+      width: 30px;
+      cursor: pointer;
+      position: absolute;
+      right: 1em;
+      top: 1em;
+      color: get-color(cultured);
+
+      &:hover, &:active {
+        color: get-color(cultured, darker);
+        transition: transform 0.3s, color 0.3s;
+        -webkit-transition: -webkit-transform 0.3s, color 0.3s;
+      }
+    }
+  }
+}
+
+div.ci-multiple-file {
+  background-color: get-color(cultured);
+  position: relative;
+  min-height: 200px;
+  max-width: 1000px;
+  @include flexbox();
+  @include flex-wrap(wrap);
+
+  .input__field {
+    @extend %hide-input;
+
+    position: absolute;
+    overflow: hidden;
+  }
+
+  div.ci-multiple-file__preview, img.ci-multiple-file__preview {
+
+    &-image, &-document, &-audio {
+      font-family: $system-font;
+
+      ul {
+        li {
+          text-decoration: none;
+          text-align: center;
+        }
+      }
+    }
+
+    &-image {
+      height: 100%;
+      box-shadow: 0px 0px  18px -9px get-color(eerie);
+    }
+
+    &-document {
+      height: 140px;
+      margin: 1em auto;
+    }
+
+    &-audio {
+      &__controls {
+        svg {
+          height: 140px;
+          margin: 1em auto;
+        }
+      }
+    }
+  }
+
+  & + span.input__info, & + span.input__error {
+    font-size: .75em;
+  }
+
+  & + span.input__info {
+    color: get-color(cultured, darker);
+  }
+
+  & + span.input__error {
+    color: get-color(failed);
+  }
+
+  span.ci-multiple-file__btn {
+    @extend %d2-centered;
+
+    .input__label {
+      @include flexbox();
+      @include justify-content(center);
+      @include align-items(center);
+
+      @extend %clickable;
+
+      background: get-color(corn);
+      color: get-color(eerie);
+      text-align: center;
+      width: 160px;
+      padding: 0.5em 1em;
+      margin: 0.4em;
+    }
+  }
+
+  span.ci-multiple-file__close-btn {
+    color: get-color(cultured, darker);
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin: 1em;
+
+    @extend %clickable;
+
+    &:hover {
+      color: get-color(cultured, darkest)
+    }
+  }
+}
