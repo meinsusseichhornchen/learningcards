@@ -1,5 +1,5 @@
 <template>
-    <div v-if="cards">
+    <div v-if="cards.data">
         <app-delete-card-modal
                 name="delete-card"
                 @cardDestroyed="setCards"
@@ -84,13 +84,13 @@
             }
         },
 
-        beforeMount() {
-            this.getCards({
+        async beforeMount() {
+            await this.getCards({
                 collection: this.collection,
                 pageNumber: this.page,
-            })
+            });
 
-            console.log(this.cards);
+            await console.log(this.cards.data);
         },
 
         mounted() {

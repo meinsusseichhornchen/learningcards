@@ -1,53 +1,52 @@
 <template>
-    <form :action="action" class="multi-step-form" method="post" enctype="multipart/form-data">
-        <input type="hidden" name="__token" :value="csrf">
+    <form :action="action" class="one-step-form" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="hidden" name="_token" :value="csrf">
 
         <component
             :is="cardTypeComponent"
+            :form="form"
+            :card="card"
+            :errors="errors"
+            @changedIndexedInput="validateInputFromGroup"
+            @removedIndexedInput="pullError"
+            @imageSelected="validateFile"
         >
-
         </component>
 
-        <app-form-navigation
-            v-if="isFirstStep()"
-            :steps="steps"
+        <app-one-step-form-navigation
             :errors="errors"
-            @movedForward="setStep(++steps.current)"
-            @stepFailed="stepFailed"
+            :previous="links.previous_page"
+            :content="{
+                back: 'components/form-navigation.back',
+                submit: 'components/form-navigation.update'
+            }"
+            @readyToBeSubmitted="submit()"
         >
-        </app-form-navigation>
-        <app-form-navigation
-            v-else
-            :steps="steps"
-            :errors="errors"
-            @movedForward="isFirstStep() ? submit() : stepUp()"
-            @movedBackward="stepDown"
-            @stepFailed="stepFailed"
-        >
-        </app-form-navigation>
+        </app-one-step-form-navigation>
+
     </form>
 </template>
 
 <script>
     // Mixins
     import validatorMixin from "../../mixins/validator";
-    import stepableMixin from "../../mixins/stepable";
 
     // Stores
     import { mapGetters, mapActions, mapMutations } from 'vuex';
 
     //Components
     import AppBaseButton from "../inputs/AppBaseButton";
-    import AppFormNavigation from "../navigators/AppFormNavigation";
     import AppGuessByImageEdit from "./cards/AppGuessByImageEdit";
+    import AppOneStepFormNavigation from "../navigators/AppOneStepFormNavigation";
 
     export default {
         name: "AppCardEdit",
 
         components: {
-            AppFormNavigation,
             AppGuessByImageEdit,
-            AppBaseButton
+            AppOneStepFormNavigation,
+            AppBaseButton,
         },
 
         data() {
@@ -61,13 +60,12 @@
                 errors: 'error/errors'
             }),
             cardTypeComponent: function() {
-                return `App${this.$_.last(this.$_.head(this.card.data).cardable_type.split('\\'))}Edit`;
+                return `App${this.$_.last(this.card.cardable_type.split('\\'))}Edit`;
             }
         },
 
         mixins : [
             validatorMixin,
-            stepableMixin,
         ],
 
         props: {
@@ -79,6 +77,10 @@
                 required: true,
                 type: String,
             },
+            links: {
+                required: true,
+                type: Object,
+            },
             card: {
                 required: true,
                 type: Object,
@@ -86,14 +88,20 @@
         },
 
         methods: {
+            ...mapActions({
+                getCardTypes: 'card/getCardTypes',
+                pushErrors: 'error/pushErrors',
+                pullErrors: 'error/pullErrors',
+                setError: 'error/setError',
+                pullError: 'error/pullError',
+                setErrors: 'error/setErrors',
+                hasErrors: 'error/hasErrors'
+            }),
+
             submit() {
                 this.$el.submit();
             }
         },
-
-        created() {
-            console.log(this.cardTypeComponent)
-        }
     }
 </script>
 

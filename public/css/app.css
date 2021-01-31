@@ -99,6 +99,25 @@ ul[data-v-8dcf46d0], li[data-v-8dcf46d0], dl[data-v-8dcf46d0] {
 .multi-step-form .multi-step-form-navigation button[data-v-8dcf46d0]:disabled {
   opacity: 0.4;
 }
+.one-step-form .one-step-form__fieldset[data-v-8dcf46d0] {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+.one-step-form .one-step-form-navigation[data-v-8dcf46d0] {
+  margin: 1em;
+}
+.one-step-form .one-step-form-navigation button[data-v-8dcf46d0] {
+  background: #ECE753;
+  color: #111130;
+  padding: 0.5em 1em;
+  margin: 0.4em;
+  width: 160px;
+}
+.one-step-form .one-step-form-navigation button[data-v-8dcf46d0]:disabled {
+  opacity: 0.4;
+}
 span.cs-select.cs-skin-underline .select__wrapper select[data-v-8dcf46d0] {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -24510,6 +24529,29 @@ ul, li, dl {
 }
 
 .multi-step-form .multi-step-form-navigation button:disabled {
+  opacity: 0.4;
+}
+
+.one-step-form .one-step-form__fieldset {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  -webkit-justify-content: center;
+}
+
+.one-step-form .one-step-form-navigation {
+  margin: 1em;
+}
+
+.one-step-form .one-step-form-navigation button {
+  background: #ECE753;
+  color: #111130;
+  padding: 0.5em 1em;
+  margin: 0.4em;
+  width: 160px;
+}
+
+.one-step-form .one-step-form-navigation button:disabled {
   opacity: 0.4;
 }
 

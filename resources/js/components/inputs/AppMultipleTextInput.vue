@@ -117,17 +117,16 @@
             },
 
             pushValue: function( value = '' ) {
-                if (this.hasColumnName()) {
-                    value = {
-                        [this.column_name]: value
-                    }
-                }
-
-                this.values.push(value);
+                this.setValue(value, this.values.length);
             },
 
             pullValue: function( index ) {
-                this.values.splice(index, 1);
+                this.unsetValue(index);
+            },
+
+            unsetValue: function( index ) {
+                this.$delete(this.values, index);
+                this.$forceUpdate();
             },
 
             setValue: function( value, index ) {
@@ -135,11 +134,13 @@
                     this.$set(this.values, index, {
                         [this.column_name]: value
                     });
+                    this.$forceUpdate();
 
                     return;
                 }
 
                 this.$set(this.values, index, value);
+                this.$forceUpdate();
             },
 
             pullIndexedInput: function( index ) {
@@ -147,7 +148,7 @@
                 this.$emit('removedIndexedInput',
                     this.hasColumnName() ?
                         this.name + '.' + index + '.' + this.column_name
-                        : this.name + '.' + index)
+                        : this.name + '.' + index);
             },
 
             validateIndexedInput: function( value, index ) {

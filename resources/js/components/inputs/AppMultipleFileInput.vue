@@ -108,13 +108,19 @@
 
             pushFile: function(file) {
                 if (this.hasColumnName()) {
-                    this.files.push({
-                        [this.column_name]: file,
+                    this.$set(this.files, this.files.length, {
+                        [this.column_name]: file
                     });
+
+/*                    this.files.push({
+                        [this.column_name]: file,
+                    });*/
+
                     return;
                 }
 
-                this.files.push(file);
+                /*this.files.push(file);*/
+                this.$set(this.files, this.files.length, file);
             },
 
 /*            removeIndexedImage: function(index) {

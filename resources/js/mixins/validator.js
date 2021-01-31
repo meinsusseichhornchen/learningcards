@@ -124,6 +124,7 @@ const validatorMixin = {
 
         validateFile: async function( file, field, rules ) {
             let rq = this.createValidatorRequest(file, rules, field);
+            console.log(file);
 
             await axios.post('/api/validate/file', rq, {
                 headers: {

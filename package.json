@@ -20,7 +20,7 @@
         "lodash": "^4.17.19",
         "pluralize": "^8.0.0",
         "popper.js": "^1.12",
-        "resolve-url-loader": "^2.3.1",
+        "resolve-url-loader": "^3.1.2",
         "sass": "^1.20.1",
         "sass-loader": "^8.0.0",
         "sass-resources-loader": "^2.1.1",
@@ -30,6 +30,7 @@
     },
     "dependencies": {
         "autoprefixer": "^9.8.6",
+        "file-saver": "^2.0.5",
         "formdata-polyfill": "^3.0.20",
         "tailwindcss": "^1.7.5",
         "vuex": "^3.5.1"

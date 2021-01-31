@@ -5,15 +5,21 @@ namespace App\Http\Controllers;
 use App\Collection;
 use App\Card;
 use App\Http\Requests\StoreCard;
+use App\Http\Requests\Cards\StoreGuessByImageCard;
+use App\Http\Resources\CardResource;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Http\Resources\CardCollection;
+use Illuminate\Support\Facades\URL;
 
 class CardController extends Controller
 {
     public function edit(Card $card) {
         return view('cards/edit', [
-            'card' => new CardCollection([$card])
+            'card' => new CardResource($card),
+            'links' => [
+                'previous_page' => URL::previous()
+            ]
         ]);
     }
 
@@ -21,6 +27,19 @@ class CardController extends Controller
         return view('cards/create', [
             'collection' => $collection
         ]);
+    }
+
+    public function update(StoreCard $request, Card $card) {
+
+        $cardControllerClass = str_replace(
+                                    class_basename(get_class($this)),
+                                    'Cards\\'.class_basename($card->cardable_type).'Controller',
+                                    get_class($this)
+                                );
+
+        $cardTypeStore = 'App\\Http\\Requests\\Cards\\Store'.class_basename($card->cardable_type).'Card';
+
+        app($cardControllerClass)->update(new $cardTypeStore($request->all()), $card);
     }
 
     public function store(StoreCard $request, Collection $collection) {
@@ -51,7 +70,9 @@ class CardController extends Controller
                 'card_id' => $card->id,
             ]);
         }
+    }
 
-
+    protected function getNamespace() {
+        return get_class($this);
     }
 }

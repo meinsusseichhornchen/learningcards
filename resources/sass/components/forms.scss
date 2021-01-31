@@ -11,7 +11,7 @@
     @include justify-content(center);
   }
 
-  .multi-step-form-navigation {
+  .multi-step-form-navigation, {
       margin: 1em;
 
       button {
@@ -26,6 +26,30 @@
         }
       }
   }
+}
 
+.one-step-form {
+
+  .one-step-form__fieldset {
+    @include flexbox();
+    @include flex-direction(column);
+    @include justify-content(center);
+  }
+
+  .one-step-form-navigation {
+    margin: 1em;
+
+    button {
+      background: get-color(corn);
+      color: get-color(hiro);
+      padding: 0.5em 1em;
+      margin: 0.4em;
+      width: 160px;
+
+      &:disabled {
+        opacity: 0.4;
+      }
+    }
+  }
 }
 

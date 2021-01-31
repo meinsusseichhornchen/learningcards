@@ -68,7 +68,7 @@
                  @movedBackward="stepDown"
         >
         </app-form-navigation>
-        <app-form-navigation v-else
+        <app-multi-step-form-navigation v-else
                 :steps="steps"
                 :errors="errors"
                 :content="{
@@ -78,7 +78,7 @@
                  @movedForward="submit"
                  @movedBackward="stepDown"
         >
-        </app-form-navigation>
+        </app-multi-step-form-navigation>
     </form>
 </template>
 
@@ -93,7 +93,7 @@
     import AppPillsInput from "../inputs/AppPillsInput";
     import AppSingleFileInput from "../inputs/AppSingleFileInput"
     import AppTextAreaPlain from "../inputs/AppTextAreaPlain";
-    import AppFormNavigation from "../navigators/AppFormNavigation";
+    import AppMultiStepFormNavigation from "../navigators/AppMultiStepFormNavigation";
 
     export default {
         name: "AppCollectionCompose",
@@ -104,7 +104,7 @@
             AppTextInput,
             AppPillsInput,
             AppSingleFileInput,
-            AppFormNavigation,
+            AppMultiStepFormNavigation,
         },
 
         computed: {

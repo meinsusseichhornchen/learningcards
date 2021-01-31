@@ -28,7 +28,7 @@
         >
         </component>
 
-        <app-form-navigation
+        <app-multi-step-form-navigation
             v-if="isFirstStep()"
             :steps="steps"
             :errors="errors"
@@ -40,8 +40,8 @@
             @movedForward="setStep(++steps.current)"
             @stepFailed="stepFailed"
         >
-        </app-form-navigation>
-        <app-form-navigation
+        </app-multi-step-form-navigation>
+        <app-multi-step-form-navigation
             v-else
             :steps="steps"
             :errors="errors"
@@ -49,7 +49,7 @@
             @movedBackward="stepDown"
             @stepFailed="stepFailed"
         >
-        </app-form-navigation>
+        </app-multi-step-form-navigation>
     </form>
 </template>
 
@@ -61,16 +61,16 @@
 
     import AppSelectorInput from '../inputs/AppSelectorInput';
     import AppBaseButton from "../inputs/AppBaseButton";
-    import AppFormNavigation from "../navigators/AppFormNavigation";
-    import AppGuessByImage from "./cards/AppGuessByImage";
+    import AppMultiStepFormNavigation from "../navigators/AppMultiStepFormNavigation";
+    import AppGuessByImageCompose from "./cards/AppGuessByImageCompose";
 
     export default {
         name: "AppCardCompose",
 
         components: {
-            AppFormNavigation,
+            AppMultiStepFormNavigation,
             AppSelectorInput,
-            AppGuessByImage,
+            AppGuessByImageCompose,
             AppBaseButton,
         },
 
@@ -87,7 +87,7 @@
                 errors: 'error/errors'
             }),
             cardTypeComponent: function() {
-                return this.form.cardable_type ? `App${this.form.cardable_type}` : '';
+                return this.form.cardable_type ? `App${this.form.cardable_type}Compose` : '';
             }
         },
 

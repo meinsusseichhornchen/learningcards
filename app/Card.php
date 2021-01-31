@@ -72,10 +72,6 @@ class Card extends Model
         return Storage::disk('public')->deleteDirectory($this->getAssetDirectory());
     }
 
-    protected function updatePictures(array $pictures) {
-
-    }
-
     public static function getNamespace() {
         return Container::getInstance()
             ->getNamespace().Card::MODELS_FOLDER;

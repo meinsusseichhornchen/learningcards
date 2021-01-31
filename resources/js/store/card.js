@@ -25,9 +25,13 @@ export default {
 
     mutations: {
         PUSH_CARDS (state, data) {
-            state.cards.data = data.data;
+            Vue.set(state.cards, 'data', data.data);
+            Vue.set(state.cards, 'links', data.links);
+            Vue.set(state.cards, 'meta', data.meta);
+
+/*            state.cards.data = data.data;
             state.cards.links = data.links;
-            state.cards.meta = data.meta;
+            state.cards.meta = data.meta;*/
         },
 
         SET_CARD_TYPES (state, data) {

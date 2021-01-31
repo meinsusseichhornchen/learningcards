@@ -55,7 +55,8 @@ Route::middleware('auth')->group(function() {
         Route::get('/edit/{card}', 'CardController@edit')
             ->where('card', '[0-9]+')
             ->name('edit_card');
-        Route::post('update', 'CardController@update')
+        Route::put('/update/{card}', 'CardController@update')
+            ->where('card', '[0-9]+')
             ->name('update_card');
         Route::post('/create', 'CardController@store')
             ->name('store_card');

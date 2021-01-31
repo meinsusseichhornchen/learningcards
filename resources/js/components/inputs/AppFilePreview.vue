@@ -73,7 +73,7 @@
         props: {
             file: {
                 required: false,
-                type: [Object, File],
+                type: [Object, File, Blob],
             },
 
             index: {
@@ -90,6 +90,10 @@
         methods: {
             isFile: function() {
                 return this.file instanceof File;
+            },
+
+            isBlob: function() {
+                return this.file instanceof Blob;
             },
 
             isImage: function() {

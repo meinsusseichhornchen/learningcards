@@ -92,7 +92,7 @@
                 }
 
                 return this.selectedFile.size > 1024 * 1024;
-            }
+            },
 
 /*            uploadSelectedFiles: function( ev ) {
                 let loadedFiles = ev.target.files || ev.dataTransfer.files;
@@ -113,7 +113,6 @@
         watch: {
             files: function() {
                 this.inputElement.files = new FileListItems(this.files);
-                console.log(this.files);
             }
         }
     }

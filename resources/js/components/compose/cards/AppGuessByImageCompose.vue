@@ -2,7 +2,7 @@
     <transition-group>
         <fieldset
                 v-show="steps.current === 2"
-                name="fieldset-card-type"
+                name="fieldset-answers"
                 class="multi-step-form__fieldset"
                 key="fieldset-2"
         >
@@ -11,13 +11,14 @@
                 :name="`answer`"
                 :column_name="`content`"
                 :content="`card.answers`"
-                :rules="['required', 'max:10']"
+                :rules="['required', 'max:30']"
                 :errors="errors"
                 @changedIndexedInput="validateIndexedInput"
                 @removedIndexedInput="removeIndexedInput"
             >
             </app-multiple-text-input>
         </fieldset>
+
         <fieldset
             v-show="steps.current === 3"
             name="fieldset-image"
@@ -28,7 +29,7 @@
                 :files="form['image']"
                 :name="`image`"
                 :caveat="`caveat.file.image`"
-                :rules="['mimes:jpg\,gif\,png\,bmp']"
+                :rules="['mimes:jpg\,jpeg\,gif\,png\,bmp']"
                 @fileSelected="validateSelectedImage"
                 :errors="errors"
             >
@@ -42,7 +43,7 @@
 
     import AppMultipleTextInput from "../../inputs/AppMultipleTextInput";
     import AppSingleFileInput from "../../inputs/AppSingleFileInput";
-    import AppFormNavigation from "../../navigators/AppFormNavigation";
+    import AppMultiStepFormNavigation from "../../navigators/AppMultiStepFormNavigation";
     import AppMultipleFileInput from "../../inputs/AppMultipleFileInput";
 
     export default {
@@ -50,7 +51,7 @@
 
         components: {
             AppMultipleFileInput,
-            AppFormNavigation,
+            AppMultiStepFormNavigation,
             AppSingleFileInput,
             AppMultipleTextInput,
         },
@@ -75,19 +76,23 @@
         },
 
         methods: {
+
             validateIndexedInput: function ( value, name, rules, index ) {
                 this.$emit('changedIndexedInput', {
                     [name]: value,
                 }, name, rules, index);
             },
+
             validateSelectedImage: function( image, name, rules ) {
                 this.$emit('imageSelected', image, name, rules);
             },
+
             removeIndexedInput: function( name ) {
                 this.$emit('removedIndexedInput', {
                     fieldName: name
                 })
             },
+
         },
 
         mounted() {
