@@ -64,12 +64,16 @@ class CardController extends Controller
             $card->answers()->create();
         }
 
-        foreach ($request->file('image') as $image) {
-            $image = $card->images()->create([
-                'url' => $card->saveCardAsset(new File($image)),
-                'card_id' => $card->id,
-            ]);
+        if ($request->file('image')) {
+            foreach ($request->file('image') as $image) {
+                $card->images()->create([
+                    'url' => $card->saveCardAsset(new File($image)),
+                    'card_id' => $card->id,
+                ]);
+            }
         }
+
+        return redirect()->route('show_collection', [$collection]);
     }
 
     protected function getNamespace() {

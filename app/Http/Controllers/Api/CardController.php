@@ -11,8 +11,10 @@ use Illuminate\Http\Request;
 
 class CardController extends Controller
 {
+    const DEFAULT_CARDS_PER_PAGE = 12;
+
     public function index(Collection $collection, Request $request) {
-        $cards = $collection->cards()->paginate(3);
+        $cards = $collection->cards()->paginate(self::DEFAULT_CARDS_PER_PAGE);
 
         return new CardCollection($cards);
     }
@@ -22,7 +24,7 @@ class CardController extends Controller
 
         $card->delete();
 
-        $cards = $collection->cards()->paginate(3);
+        $cards = $collection->cards()->paginate(self::DEFAULT_CARDS_PER_PAGE);
 
         return new CardCollection($cards);
     }

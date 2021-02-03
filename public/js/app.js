@@ -4018,6 +4018,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AppShowMoreButton",
@@ -4040,8 +4042,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    loadMore: function loadMore(page) {
-      _events__WEBPACK_IMPORTED_MODULE_0___default.a.$emit(this["for"] + '.loadMore', page);
+    loadMore: function loadMore() {
+      this.$emit('loadPaginated' + this["for"].charAt(0).toUpperCase() + this["for"].slice(1), ++this.pagination.current_page);
     }
   }
 });
@@ -4603,6 +4605,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -4638,6 +4641,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     setCards: 'card/setCards'
   })), {}, {
     loadCards: function loadCards(pageNumber) {
+      if (this.cards.data.length > 0) {
+        if (pageNumber > this.cards.meta.last_page) {
+          return;
+        }
+      }
+
       this.page = pageNumber;
       this.getCards({
         collection: this.collection,
@@ -4660,10 +4669,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               });
 
             case 2:
-              _context.next = 4;
-              return console.log(_this.cards.data);
-
-            case 4:
             case "end":
               return _context.stop();
           }
@@ -4733,9 +4738,6 @@ __webpack_require__.r(__webpack_exports__);
         card: this.card
       });
     }
-  },
-  mounted: function mounted() {
-    console.log(this.answers);
   }
 });
 
@@ -45041,8 +45043,14 @@ var render = function() {
     "a",
     {
       staticClass:
-        "bg-transparent hover:bg-cultured\n   text-cultured hover:text-white text-center\n   py-2 px-4 w-full block mt-3 mx-1\n   border border-cultured hover:border-transparent rounded",
-      attrs: { href: "#" }
+        "bg-transparent hover:bg-hiro\n   text-hiro hover:text-white text-center\n   py-2 px-4 w-full block mt-3 mx-auto mt-2\n   border border-hiro hover:border-transparent rounded show-more-btn",
+      attrs: { href: "#" },
+      on: {
+        click: function($event) {
+          $event.preventDefault()
+          return _vm.loadMore($event)
+        }
+      }
     },
     [_vm._v("\n    " + _vm._s(_vm._f("trans")(_vm.content)) + "\n")]
   )
@@ -45566,51 +45574,47 @@ var render = function() {
                 "ul",
                 { staticClass: "flex card-list" },
                 [
-                  _c(
-                    "li",
-                    { staticClass: "card-list__item w-full sm:w-2/4 md:w-2/6" },
-                    [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "card-list__add-btn",
-                          attrs: {
-                            href:
-                              _vm.links.create_card_collection !== undefined
-                                ? _vm.links.create_card_collection
-                                : "#"
-                          }
-                        },
-                        [
-                          _c(
-                            "svg",
-                            {
-                              staticClass: "w-16 h-16",
+                  _c("li", { staticClass: "card-list__item" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "card-list__add-btn",
+                        attrs: {
+                          href:
+                            _vm.links.create_card_collection !== undefined
+                              ? _vm.links.create_card_collection
+                              : "#"
+                        }
+                      },
+                      [
+                        _c(
+                          "svg",
+                          {
+                            staticClass: "w-16 h-16",
+                            attrs: {
+                              xmlns: "http://www.w3.org/2000/svg",
+                              fill: "none",
+                              viewBox: "0 0 24 24",
+                              stroke: "currentColor"
+                            }
+                          },
+                          [
+                            _c("path", {
                               attrs: {
-                                xmlns: "http://www.w3.org/2000/svg",
-                                fill: "none",
-                                viewBox: "0 0 24 24",
-                                stroke: "currentColor"
+                                "stroke-linecap": "round",
+                                "stroke-linejoin": "round",
+                                "stroke-width": "2",
+                                d:
+                                  "M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
                               }
-                            },
-                            [
-                              _c("path", {
-                                attrs: {
-                                  "stroke-linecap": "round",
-                                  "stroke-linejoin": "round",
-                                  "stroke-width": "2",
-                                  d:
-                                    "M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-                                }
-                              })
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("span", [_vm._v("Add Card")])
-                        ]
-                      )
-                    ]
-                  ),
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("span", [_vm._v("Add Card")])
+                      ]
+                    )
+                  ]),
                   _vm._v(" "),
                   _vm._l(_vm.cards.data, function(card) {
                     return _c("app-card-list-answer", {
@@ -45623,9 +45627,10 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _vm.cards.data.length > 0
+          _vm.cards.data.length > 0 && _vm.page < _vm.cards.meta.last_page
             ? _c("app-show-more-button", {
-                attrs: { for: "cards", pagination: _vm.cards.meta }
+                attrs: { for: "cards", pagination: _vm.cards.meta },
+                on: { loadPaginatedCards: _vm.loadCards }
               })
             : _vm._e()
         ],
@@ -45655,7 +45660,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("li", { staticClass: "card-list__item w-full sm:w-2/4 md:w-2/6" }, [
+  return _c("li", { staticClass: "card-list__item" }, [
     _c(
       "a",
       {
@@ -62447,6 +62452,18 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   namespaced: true,
@@ -62469,13 +62486,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   mutations: {
-    PUSH_CARDS: function PUSH_CARDS(state, data) {
+    SET_CARDS: function SET_CARDS(state, data) {
       Vue.set(state.cards, 'data', data.data);
       Vue.set(state.cards, 'links', data.links);
       Vue.set(state.cards, 'meta', data.meta);
-      /*            state.cards.data = data.data;
-                  state.cards.links = data.links;
-                  state.cards.meta = data.meta;*/
+      /*
+      state.cards.data = data.data;
+      state.cards.links = data.links;
+      state.cards.meta = data.meta;
+      */
+    },
+    PUSH_CARDS: function PUSH_CARDS(state, data) {
+      var _state$cards$data;
+
+      (_state$cards$data = state.cards.data).push.apply(_state$cards$data, _toConsumableArray(data.data));
+
+      Vue.set(state.cards, 'links', data.links);
+      Vue.set(state.cards, 'meta', data.meta);
     },
     SET_CARD_TYPES: function SET_CARD_TYPES(state, data) {
       state.card_types.data = data;
@@ -62537,7 +62564,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     setCards: function setCards(_ref4, cards) {
       var commit = _ref4.commit;
-      commit('PUSH_CARDS', cards);
+      commit('SET_CARDS', cards);
     },
     getCardTypes: function getCardTypes(_ref5) {
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {

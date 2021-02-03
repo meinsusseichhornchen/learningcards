@@ -1,5 +1,5 @@
 <template>
-    <li class="card-list__item w-full sm:w-2/4 md:w-2/6">
+    <li class="card-list__item">
         <a
             :href="card.links.edit"
             class="absolute block top-0 w-full h-100"
@@ -47,10 +47,6 @@
                 this.$modal.show('delete-card', { card: this.card })
             }
         },
-
-        mounted() {
-            console.log(this.answers);
-        }
     }
 </script>
 

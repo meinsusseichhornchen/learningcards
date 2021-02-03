@@ -1,9 +1,83 @@
+/* ------- AppAccordionList --------- */
+
 .accordion-list {
   background: get-color(hiro, lightest);
 }
 
+/* -------- AppCardList, AppCardListAnswer -------- */
+
+$card-width: 150px;
+$card-margin: 8px;
+
+@mixin one-card-display-sm {
+  @media (max-width: calc(#{$card-width * 2} + #{$card-margin * 4})) {
+    @content;
+  }
+}
+
+@mixin two-cards-display {
+  @media (min-width: calc(#{$card-width * 1.333 * 2} + #{$card-margin * 4})) and (max-width: calc(#{$card-width * 1.333 * 3} + #{$card-margin * 6})) {
+    @content;
+  }
+}
+
+@mixin three-cards-display {
+  @media (min-width: calc(#{$card-width * 1.333 * 3} + #{$card-margin * 6})) and (max-width: calc(#{$card-width * 1.333 * 4} + #{$card-margin * 8})) {
+    @content;
+  }
+}
+
+@mixin four-cards-display {
+  @media (min-width: calc(#{$card-width * 1.333 * 4} + #{$card-margin * 8})) {
+    @content;
+  }
+}
+
 .card-list {
   @include flexbox();
+  @include justify-content(start);
+
+  @include one-card-display-sm() {
+    @include justify-content(center);
+    width: auto;
+  }
+
+  @include flex-wrap(wrap);
+  margin: 0 auto;
+
+  max-width: calc(#{$card-width * 1.333 * 6});
+
+  width: calc(#{$card-width * 2} + #{$card-margin * 4});
+
+  & + .show-more-btn {
+    width: calc(#{$card-width * 2} + #{$card-margin * 4});
+  }
+
+  @include two-cards-display() {
+    width: calc(#{$card-width * 1.333 * 2} + #{$card-margin * 4});
+
+    & + .show-more-btn {
+      width: calc(#{$card-width * 1.333 * 2} + #{$card-margin * 4});
+    }
+  }
+
+  @include three-cards-display() {
+    width: calc(#{$card-width * 1.333 * 3} + #{$card-margin * 6});
+
+    & + .show-more-btn {
+      width: calc(#{$card-width * 1.333 * 3} + #{$card-margin * 6});
+    }
+  }
+
+  @include four-cards-display() {
+    width: calc(#{$card-width * 1.333 * 4} + #{$card-margin * 8});
+
+    & + .show-more-btn {
+      width: calc(#{$card-width * 1.333 * 4} + #{$card-margin * 8});
+    }
+  }
+
+
 
   &__item {
     position: relative;
@@ -11,24 +85,44 @@
     margin: 8px;
     box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.37);
 
+    width: $card-width;
+    height: $card-width;
+
+    @include two-cards-display() {
+      width: #{$card-width * 1.333};
+      height: #{$card-width * 1.333};
+    }
+
+    @include three-cards-display() {
+      width: #{$card-width * 1.333};
+      height: #{$card-width * 1.333};
+    }
+
+    @include four-cards-display() {
+      width: #{$card-width * 1.333};
+      height: #{$card-width * 1.333};
+    }
+
     > a {
-      height: 200px;
+      height: 100%;
       width: 100%;
 
       @include flexbox();
       @include justify-content(center);
-      @include align-items(center);
       @include flex-direction(column);
+    }
+
+    > .card-list__add-btn {
+      @include align-items(center);
     }
   }
 
   &__content {
     margin: 1em;
     overflow: hidden;
-    font-size: 1.25rem;
+    font-size: 1rem;
 
     @include flexbox();
-    @include align-items(center);
 
     @include prefix((
       text-overflow: ellipsis,

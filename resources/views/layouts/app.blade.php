@@ -19,7 +19,7 @@
 </head>
 <body>
     <div id="app">
-        <main class="container mx-auto">
+        <main>
             @yield('content')
         </main>
     </div>
