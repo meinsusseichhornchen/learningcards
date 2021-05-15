@@ -112,6 +112,12 @@
             },
         },
 
+        beforeMount() {
+            if (this.default) {
+                this.inputValue = this.default;
+            }
+        },
+
         mounted() {
             if (this.isInputFilled()) {
                 classie.add(this.$el, 'input--filled');

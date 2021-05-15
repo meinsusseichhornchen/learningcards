@@ -55,8 +55,7 @@ const validatorMixin = {
                             this.removeStepFailed();
                         }
                         /*                            this.errors = {};*/
-                    })
-                    .catch((err) => {
+                    }).catch((err) => {
                         console.log(err.response);
                         this.pushErrors(err.response.data);
                         console.log(this.errors);

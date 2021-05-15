@@ -1,0 +1,15 @@
+nav {
+  &.main-nav {
+      $main-nav-height: 55px;
+
+      height: $main-nav-height;
+      @include prefix((transition: height .4s ease-in-out), webkit moz);
+
+      ul {
+        li {
+          height: $main-nav-height * 0.75;
+          text-transform: uppercase;
+        }
+      }
+  }
+}

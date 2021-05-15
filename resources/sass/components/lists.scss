@@ -1,8 +1,4 @@
-/* ------- AppAccordionList --------- */
 
-.accordion-list {
-  background: get-color(hiro, lightest);
-}
 
 /* -------- AppCardList, AppCardListAnswer -------- */
 
@@ -131,13 +127,13 @@ $card-margin: 8px;
 
   &__del-btn {
     border-radius: 999px;
-    border: 2px solid get-color(cultured, darker);
+    //border: 2px solid get-color(cultured, darker);
     cursor: pointer;
     position: absolute;
     margin: 0.25em;
     top: 0;
     right: 0;
-    color: get-color(cultured, darker);
+    //color: get-color(cultured, darker);
 
     @include prefix((
       transition: background 0.4s ease-in-out,
@@ -148,15 +144,15 @@ $card-margin: 8px;
     ), ms webkit);
 
     &:hover, &:active {
-      color: get-color(white);
-      background: get-color(cultured, darker);
+      //color: get-color(white);
+      //background: get-color(cultured, darker);
     }
   }
 
   &__add-btn {
     height: 100%;
     width: 100%;
-    color: get-color(cultured, darker);
+    //color: get-color(cultured, darker);
 
     @include flexbox();
     @include justify-content(center);

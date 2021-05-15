@@ -2,29 +2,28 @@ $colors: (
   white: (
     base: #FFF,
   ),
-  hiro: (
-    base: #111130,
+  taunt: (
+    base: #3C5471,
     lightest: #B0B0E3,
-    lighter: #1B1B4B,
+    lighter: #4C6A8F,
   ),
-  corn: (
-    base: #ECE753,
+  clouds: (
+    base: #CAC194,
+    lighter: #D6D0AD,
   ),
-  crayola: (
-    base: #F9C784,
+  boognish: (
+    base: #848482,
   ),
-  eerie: (
-    base: #161515,
+  shadow: (
+    base: #24272A,
   ),
-  cultured: (
-    base: #F0F0F0,
-    darker: #9E9E9E,
-    darkest: #636363
+  neutral: (
+    base: #DEDEDE,
   ),
   success: (
-    base: #2AB881,
+    base: #109847,
   ),
   failed: (
-    base: #C60125,
+    base: #EC512F,
   )
 );

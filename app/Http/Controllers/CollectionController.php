@@ -11,9 +11,25 @@ use Illuminate\Support\Facades\Validator;
 class CollectionController extends Controller
 {
     public function edit(Collection $collection) {
+        $collection = new CollectionCollection([$collection]);
+
         return view('collections/edit', [
-            'collection' => new CollectionCollection([$collection])
+            'collection' => $collection->first()
         ]);
+    }
+
+    public function update(Collection $collection, StoreCollection $request) {
+        $collection->update([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        $collection->tags()
+            ->sync($request->tags);
+
+        $collection->save();
+
+        return redirect()->route('home');
     }
 
     public function create() {

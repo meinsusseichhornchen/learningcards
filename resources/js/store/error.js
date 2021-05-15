@@ -18,6 +18,10 @@ export default {
             Vue.set(state.errors, params.fieldName, params.error);
         },
 
+        UNSET_ERROR (state, params) {
+            Vue.delete(state.errors, params.fieldName);
+        },
+
         /**
          * @return {boolean}
          */
@@ -37,12 +41,13 @@ export default {
     },
 
     actions: {
-        hasErrors({ commit}) {
+        has({ commit}) {
             commit('HAS_ERRORS');
         },
-        pushErrors ({ commit, dispatch }, errors) {
+        push ({ commit, dispatch }, errors) {
+            console.log(errors);
             $_.forEach(errors, (value, key) => {
-                dispatch('setError', {
+                dispatch('set', {
                     value: value,
                     key: key
                 })
@@ -50,18 +55,23 @@ export default {
         },
         pullErrors ({ commit, dispatch }, rules) {
             $_.forEach(rules, (value, key) => {
-                dispatch('pullError', {
+                dispatch('pull', {
                     fieldName: key
                 })
             })
         },
-        pullError({ commit }, fieldName) {
+        pull({ commit }, fieldName) {
             commit('PULL_ERROR', fieldName)
+        },
+        unset({ commit }, key) {
+            commit('UNSET_ERROR', {
+                fieldName: key
+            })
         },
         setErrors ({ commit }, errors) {
             commit('SET_ERRORS', errors);
         },
-        setError({ commit }, { value, key }) {
+        set({ commit }, { value, key }) {
             commit('SET_ERROR', {
                 error: value,
                 fieldName: key

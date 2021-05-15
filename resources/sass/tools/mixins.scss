@@ -136,6 +136,17 @@
   align-self: $value;
 }
 
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * ---- Shapes ----
+ * ----------------
+ */
+
+%rounded-background {
+  border-radius: 25px;
+}
+
 %d2-centered {
   position: absolute;
   right: 50%;
@@ -156,4 +167,17 @@
   @include prefix((
     transform: translateY(50%),
   ))
+}
+
+/* ------------------------------------------------------- */
+
+/* ----------------
+ * - Transitions --
+ * ----------------
+ */
+@mixin transition($x...) {
+  -webkit-transition: $x;
+  -moz-transition: $x;
+  -o-transition: $x;
+  transition: $x;
 }

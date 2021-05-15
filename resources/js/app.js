@@ -62,6 +62,7 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+import auth from './store/auth';
 import card from './store/card';
 import collection from './store/collection'
 import game from './store/game';
@@ -71,12 +72,13 @@ import error from './store/error'
 
 const store = new Vuex.Store({
     modules: {
+        auth,
         game,
         score,
         tag,
         collection,
         card,
-        error
+        error,
     }
 });
 

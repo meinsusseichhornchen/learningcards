@@ -11,7 +11,7 @@ class ScoringController extends Controller
 {
 
     public function index(Request $request) {
-        $scores = $request->user()->scores()->paginate(1);
+        $scores = $request->user()->scores()->paginate(2);
 
         return new ScoringCollection($scores);
     }

@@ -2,7 +2,15 @@
     <div class="ci-pills flex m-4">
         <transition-group tag="div" name="slide-left" class="ci-pills-inputs">
             <div v-for="(option, key) in options" :key="'input-' + key" class="ci-pills-item">
-                <input class="ci-pills-item-input" type="checkbox" :id="$_.kebabCase(option.name)" :value="option.id" v-model="checked" :name="name + `[]`" @change="updateCheckedValues">
+                <input
+                    class="ci-pills-item-input"
+                    type="checkbox"
+                    :id="$_.kebabCase(option.name)"
+                    :value="option.id"
+                    v-model="checked"
+                    :name="name + `[]`"
+                    @change="updateCheckedValues"
+                >
                 <label class="input__label rounded" :for="$_.kebabCase(option.name)">{{ option.name }}</label>
             </div>
         </transition-group>
@@ -102,6 +110,7 @@
             },
 
             addNewPill: async function ( ev ) {
+                console.log(this.name);
                 await axios.post('/api/' + this.name + '/create', {
                     name: this.$el.querySelector('input[name=' + this.inputName() + ']').value
                 })
@@ -111,9 +120,15 @@
                         }
                     })
                     .catch((err) => {
-/*                        console.log(err.response)*/
+                        console.log(err.response)
                         this.$emit('newPillFailed', err.response.data.errors, this.name);
                     });
+            }
+        },
+
+        mounted() {
+            if (this.values) {
+                this.checked = this.values;
             }
         }
     }

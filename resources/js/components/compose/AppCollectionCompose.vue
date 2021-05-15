@@ -14,20 +14,10 @@
                 </app-text-input>
             </fieldset>
 
-<!--            <fieldset v-if="steps.current === 2" name="fieldset-tag" class="multi-step-form__fieldset" key="fieldset-2">
-                <app-selector-input
-                        :options="tags.data"
-                        :name="`tag`"
-                        :content="`Tag`"
-                        @validateChanges="validateChanges"
-                >
-                </app-selector-input>
-            </fieldset>-->
-
             <fieldset v-show="steps.current === 2" name="fieldset-tags" class="multi-step-form__fieldset" key="fieldset-3">
                 <app-pills-input
                         v-model="form['tags']"
-                        :options="tags.data"
+                        :options="tags"
                         :name="`tags`"
                         :errors="errors.hasOwnProperty('tags') ? errors.tags : []"
                         @updateCheckedValues="updateTagPills"
@@ -36,16 +26,6 @@
                 >
                 </app-pills-input>
             </fieldset>
-
-<!--            <fieldset v-if="steps.current === 3" name="fieldset-resource" class="multi-step-form__fieldset" key="fieldset-4">
-                <app-single-file-input
-                        v-model="form.resource"
-                        :name="`resource`"
-                        :rules="['mimes:jpeg\,bmp\,png\,gif']"
-                        @uploadedFile="validateUploadedFile"
-                >
-                </app-single-file-input>
-            </fieldset>-->
 
             <fieldset v-show="steps.current === 3" name="fieldset-description" class="multi-step-form__fieldset" key="fieldset-5">
                 <app-text-area-plain
@@ -61,13 +41,13 @@
             </fieldset>
         </transition-group>
 
-        <app-form-navigation v-if="!isLastStep()"
+        <app-multi-step-form-navigation v-if="!isLastStep()"
                 :steps="steps"
                 :errors="errors"
                  @movedForward="stepUp"
                  @movedBackward="stepDown"
         >
-        </app-form-navigation>
+        </app-multi-step-form-navigation>
         <app-multi-step-form-navigation v-else
                 :steps="steps"
                 :errors="errors"
@@ -147,22 +127,20 @@
         methods: {
             ...mapActions({
                 getTags: 'tag/getTags',
-                pushErrors: 'error/pushErrors',
+                pushTag: 'tag/push',
+                hasErrors: 'error/hasErrors',
+                pushErrors: 'error/push',
                 pullErrors: 'error/pullErrors',
-                setError: 'error/setError',
-                pullError: 'error/pullError',
-                setErrors: 'error/setErrors'
-            }),
-
-            ...mapMutations({
-                PUSH_TAGS: 'tag/PUSH_TAGS',
+                setErrors: 'error/setErrors',
+                setError: 'error/set',
+                pullError: 'error/pull',
             }),
 
             displayTagPillsErrors(payload, field) {
                 if (payload.hasOwnProperty('name')) {
-                    this.ADD_ERROR({
-                        field: field,
-                        error: payload.name
+                    this.setError({
+                        value: payload.name,
+                        key: field
                     });
 
                     this.getTags();
@@ -170,11 +148,9 @@
             },
 
             pushCreatedTagPill(payload, field) {
-                this['PUSH_' + field.toUpperCase()](payload);
-                this.ADD_ERROR(field, [])
+                this['push' + this.$_.upperFirst(field)](payload);
+                this.unsetError(field);
             },
-
-
 
             submit: function() {
                 if (this.anyErrors()) {
@@ -186,13 +162,8 @@
 
             updateTagPills(payload, field) {
                 this.form[field] = payload;
-                this.validate([field]);
+                //this.validate([field]);
             },
-
-/*            validateInput(payload, field, rules = {}) {
-                this.form[field] = payload;
-                this.validate(rules);
-            },*/
 
             validateUploadedFile(payload, field, validation = {}) {
                 this.form[field] = payload;

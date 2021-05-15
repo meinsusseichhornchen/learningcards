@@ -35,7 +35,7 @@
 
   &-title {
     font-size: 1.25rem;
-    color: get-color(cultured, darker);
+    color: get-color(taunt);
   }
 
   &-close-btn {
@@ -43,19 +43,19 @@
     margin: .25em;
     top: 0;
     right: 0;
-    color: get-color(cultured, darker);
+    color: get-color(taunt);
   }
 
   &-primary-btn {
-    color: get-color(cultured, darker);
+    color: get-color(taunt);
     width: 100px;
     text-transform: uppercase;
-    border-left: 1px solid get-color(cultured, darker);
+    border-left: 1px solid get-color(taunt);
   }
 
   &-footer {
     div > button:last-of-type {
-      border-right: 1px solid get-color(cultured, darker);
+      border-right: 1px solid get-color(taunt);
     }
   }
 }

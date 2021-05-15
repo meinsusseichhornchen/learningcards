@@ -30,20 +30,26 @@ Route::middleware('auth')->group(function() {
     Route::prefix('collections')->group(function() {
         Route::get('/create', 'CollectionController@create')
             ->name('create_collection');
+
         Route::get('/edit/{collection}', 'CollectionController@edit')
             ->where('collection', '[0-9]+')
             ->name('edit_collection');
+
         Route::get('/show/{collection}', 'CollectionController@show')
             ->where('collection', '[0-9]+')
             ->name('show_collection');
-        Route::post('update', 'CollectionController@update')
+
+        Route::post('update/{collection}', 'CollectionController@update')
+            ->where('collection', '[0-9+]')
             ->name('update_collection');
+
         Route::post('/create', 'CollectionController@store')
             ->name('store_collection');
 
         Route::get('/{collection}/cards/create', 'CardController@create')
             ->where('collection', '[0-9]+')
             ->name('create_card_collection');
+
         Route::post('/{collection}/cards/create', 'CardController@store')
             ->where('collection', '[0-9]+')
             ->name('store_card_collection');

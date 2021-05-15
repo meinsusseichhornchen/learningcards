@@ -38,6 +38,25 @@
   }
 }
 
+.slide-down {
+  &-enter {
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    @include prefix((transform: translateY(-100px)), moz webkit);
+  }
+
+  &-enter-active {
+    @include prefix((transition: all .4s ease-in-out), moz webkit);
+  }
+
+  &-enter-to, &-leave {
+    opacity: 1;
+  }
+}
+
 .modal {
   &-enter, &-leave-active {
     opacity: 0;

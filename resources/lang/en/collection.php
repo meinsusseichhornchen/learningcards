@@ -12,6 +12,10 @@ return [
 
     'name' => 'Name',
     'description' => 'Description',
-    'add new item' => 'Add new :item'
+    'add new item' => 'Add new :item',
+    'play' => 'Play',
+    'delete' => 'Delete',
+    'edit' => 'Edit',
+
 
 ];

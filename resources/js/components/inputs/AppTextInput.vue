@@ -13,8 +13,18 @@
                 :class="hasErrors() ? 'input--failed' : ''"
         >
         <label :for="name" class="input__label">
-            <span v-if="errors.length <= 0" class="input__label-content">{{ content | trans }}</span>
-            <span v-else class="input__label-content">{{ errors[0] }}</span>
+            <span
+                v-if="errors.length <= 0"
+                class="input__label-content"
+            >
+                    {{ content | trans }}
+            </span>
+            <span
+                v-else
+                class="input__label-content"
+            >
+                {{ errors[0] }}
+            </span>
         </label>
         <button v-if="isIndexed() && index > 0"
                 class="input__delete-btn"

@@ -4,9 +4,7 @@ export default {
     namespaced: true,
 
     state: {
-        tags: {
-            data: [],
-        },
+        tags: [],
     },
 
     getters: {
@@ -17,15 +15,27 @@ export default {
 
     mutations: {
         PUSH_TAGS (state, data) {
-            state.tags.data = data;
+            Vue.set(state.tags, state.tags.length, data);
+        },
+
+        SET_TAGS (state, data) {
+            Vue.set(state, 'tags', data);
         }
     },
 
     actions: {
-        async getTags({ commit }) {
+        async getTags({ commit, dispatch }) {
             let response = await axios.get('/api/tags');
 
-            commit('PUSH_TAGS', response.data);
+            dispatch('setTags', response.data);
+        },
+
+        setTags({ commit }, payload) {
+            commit('SET_TAGS', payload);
+        },
+
+        push({ commit }, payload) {
+            commit('PUSH_TAGS', payload)
         }
     }
 }

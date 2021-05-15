@@ -70,7 +70,7 @@ span.ci-text {
   &.ci-skin {
     &-underline {
       &.input--filled .input__label .input__label-content {
-        color: get-color(corn);
+        color: get-color(clouds);
         transform: translate3d(0, 2em, 0) scale3d(0.655, 0.655, 1);
         -webkit-transform: translate3d(0, 2em, 0) scale3d(0.655, 0.655, 1);
 
@@ -84,10 +84,10 @@ span.ci-text {
         background: transparent;
         padding: 0.5em 0;
         margin-bottom: 2em;
-        color: get_color(hiro);
+        color: get_color(taunt);
 
         &:focus + .input__label:after, .input--filled .input__label:after {
-            background: get-color(corn);
+            background: get-color(clouds);
 
             @include prefix((
               transform: scale3d(1, 0.25, 1),
@@ -103,7 +103,7 @@ span.ci-text {
         }
 
         &:focus + .input__label .input__label-content {
-          color: get-color(corn);
+          color: get-color(clouds);
           transform: translate3d(0, 2em, 0) scale3d(0.655, 0.655, 1);
           -webkit-transform: translate3d(0, 2em, 0) scale3d(0.655, 0.655, 1);
         }
@@ -129,7 +129,7 @@ span.ci-text {
           position: absolute;
           width: 100%;
           height: 4px;
-          background: get-color(hiro);
+          background: get-color(taunt);
           left: 0;
           top: 100%;
           transition: transform 0.3s, background-color 0.3s;
@@ -164,7 +164,7 @@ span.ci-text {
     margin: 0;
 
     svg {
-      color: get-color(cultured, darker);
+      color: get-color(shadow);
       margin: 0;
     }
   }
@@ -236,7 +236,7 @@ span.ci-textarea {
       &.input--filled {
         .input__label {
           .input__label-content {
-            color: get-color(hiro);
+            color: get-color(taunt);
             transform: translate3d(0, $input-height - 5px, 0) scale3d(0.655, 0.655, 1);
             -webkit-transform: translate3d(0, $input-height - 5px, 0) scale3d(0.655, 0.655, 1);
           }
@@ -248,16 +248,16 @@ span.ci-textarea {
         width: 100%;
         background: transparent;
         padding: 0.5em 0;
-        border-bottom: 4px solid get-color(hiro);
+        border-bottom: 4px solid get-color(taunt);
 
         &:focus {
           transition: transform 0.3s, border 0.3s;
           -webkit-transition: -webkit-transform 0.3s, border 0.3s;
           border-bottom-width: 1px;
-          border-color: get-color(corn);
+          border-color: get-color(clouds);
 
           & + .input__label .input__label-content {
-            color: get-color(corn);
+            color: get-color(clouds);
             transform: translate3d(0, $input-height - 5px, 0) scale3d(0.655, 0.655, 1);
             -webkit-transform: translate3d(0, $input-height - 5px, 0) scale3d(0.655, 0.655, 1);
           }
@@ -270,7 +270,7 @@ span.ci-textarea {
         text-align: left;
         font-size: 1em;
         padding: 10px 0 2px;
-        color: get-color(hiro, ligthest);
+        color: get-color(taunt, ligthest);
         pointer-events: none;
 
         &-content {
@@ -283,7 +283,7 @@ span.ci-textarea {
 
       .input__word-counter {
         float: right;
-        color: get-color(hiro);
+        color: get-color(taunt);
       }
     }
   }
@@ -314,7 +314,7 @@ span.cs-select {
         text-align: left;
         font-size: 1em;
         padding: 10px 0 2px;
-        color: get-color(hiro, lightest);
+        color: get-color(taunt, lightest);
         @extend %remove-arrow-select;
       }
 
@@ -332,7 +332,7 @@ span.cs-select {
         position: absolute;
         width: 100%;
         height: 4px;
-        background: get-color(hiro);
+        background: get-color(taunt);
         left: 0;
         top: 100%;
         transition: transform 0.3s, background-color 0.3s;
@@ -357,9 +357,14 @@ span.cs-select {
 /* Buttons */
 button.ci-skin {
   &-action {
-    background: get-color(hiro);
+    background: get-color(taunt);
     color: get-color(white);
   }
+}
+
+/* Button Groups*/
+div.cbg-actions {
+
 }
 
 
@@ -387,8 +392,8 @@ div.ci-pills {
 
         & + label {
           background: get-color(white);
-          color: get-color(hiro, lightest);
-          border: 1px solid get-color(hiro, lightest);
+          color: get-color(taunt, lightest);
+          border: 1px solid get-color(taunt, lightest);
           max-width: 250px;
           margin: 5px;
           padding: 0.6em;
@@ -396,7 +401,7 @@ div.ci-pills {
         }
 
         &:checked + label {
-          background-color: get-color(hiro);
+          background-color: get-color(taunt);
           color: get-color(white);
           border: 1px solid rgba(0, 0, 0, 0);
         }
@@ -435,14 +440,14 @@ div.ci-pills {
         padding: 0.5em 0;
         border-radius: 0;
         display: block;
-        color: get-color(hiro, ligthest);
+        color: get-color(taunt, ligthest);
 
         @include prefix((
                 appearance: none
         ), webkit moz);
 
         &:focus + .input__label .input__label-content {
-          color: get-color(hiro);
+          color: get-color(taunt);
           transform: translate3d(0, 2em, 0) scale3d(0.655, 0.655, 1);
           -webkit-transform: translate3d(0, 2em, 0) scale3d(0.655, 0.655, 1);
         }
@@ -466,7 +471,7 @@ div.ci-pills {
         font-size: 1em;
         padding: 10px 0 2px;
         pointer-events: none;
-        color: get-color(hiro, lightest);
+        color: get-color(taunt, lightest);
 
         &:after {
           content: "";
@@ -476,7 +481,7 @@ div.ci-pills {
           height: 4px;
           left: 0;
           top: 100%;
-          background: get-color(hiro, lightest);
+          background: get-color(taunt, lightest);
           transition: transform 0.3s, background-color 0.3s;
           -webkit-transition: -webkit-transform 0.3s, background-color 0.3s;
         }
@@ -488,7 +493,7 @@ div.ci-pills {
           transition: transform 0.3s, color 0.3s;
           -webkit-transition: -webkit-transform 0.3s, color 0.3s;
           position: relative;
-          color: get-color(hiro, lightest);
+          color: get-color(taunt, lightest);
           @extend %truncate-text;
         }
       }
@@ -544,7 +549,7 @@ div.ci-file {
   }
 
   .input__label {
-    background: get-color(hiro, lighter);
+    background: get-color(taunt, lighter);
     color: get-color(white);
     padding: 0.5em;
     cursor: pointer;
@@ -579,10 +584,10 @@ div.ci-file {
       position: absolute;
       right: 1em;
       top: 1em;
-      color: get-color(cultured);
+      color: get-color(shadow);
 
       &:hover, &:active {
-        color: get-color(cultured, darker);
+        color: get-color(shadow);
         transition: transform 0.3s, color 0.3s;
         -webkit-transition: -webkit-transform 0.3s, color 0.3s;
       }
@@ -591,7 +596,7 @@ div.ci-file {
 }
 
 div.ci-multiple-file {
-  background-color: get-color(cultured);
+  background-color: get-color(shadow);
   position: relative;
   min-height: 200px;
   max-width: 1000px;
@@ -620,7 +625,7 @@ div.ci-multiple-file {
 
     &-image {
       height: 100%;
-      box-shadow: 0px 0px  18px -9px get-color(eerie);
+      box-shadow: 0px 0px  18px -9px get-color(boognish);
     }
 
     &-document {
@@ -643,7 +648,7 @@ div.ci-multiple-file {
   }
 
   & + span.input__info {
-    color: get-color(cultured, darker);
+    color: get-color(shadow);
   }
 
   & + span.input__error {
@@ -660,8 +665,8 @@ div.ci-multiple-file {
 
       @extend %clickable;
 
-      background: get-color(corn);
-      color: get-color(eerie);
+      background: get-color(clouds);
+      color: get-color(boognish);
       text-align: center;
       width: 160px;
       padding: 0.5em 1em;
@@ -670,7 +675,7 @@ div.ci-multiple-file {
   }
 
   span.ci-multiple-file__close-btn {
-    color: get-color(cultured, darker);
+    color: get-color(shadow);
     position: absolute;
     top: 0px;
     left: 0px;
@@ -679,7 +684,7 @@ div.ci-multiple-file {
     @extend %clickable;
 
     &:hover {
-      color: get-color(cultured, darkest)
+      color: get-color(shadow)
     }
   }
 }

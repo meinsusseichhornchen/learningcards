@@ -17,56 +17,81 @@
             <fieldset v-show="steps.current === 2" name="fieldset-tags" class="multi-step-form__fieldset" key="fieldset-3">
                 <app-pills-input
                         v-model="form.tags"
-                        :options="tags.data"
+                        :values="form.tags"
+                        :options="tags"
                         :name="`tags`"
                         :errors="errors.hasOwnProperty('tags') ? errors.tags : []"
+                        @updateCheckedValues="updateTagPills"
+                        @newPillCreated="pushCreatedTagPill"
+                        @newPillFailed="displayTagPillsErrors"
                 >
                 </app-pills-input>
             </fieldset>
+
+            <fieldset v-show="steps.current === 3" name="fieldset-description" class="multi-step-form__fieldset" key="fieldset-5">
+                <app-text-area-plain
+                        v-model="form.description"
+                        :default="form.description"
+                        :name="`description`"
+                        :rules="['max:150']"
+                        :max_length="150"
+                        :content="`collection.description`"
+                        :errors="errors.hasOwnProperty('description') ? errors.description : []"
+                        @changed="validateInput"
+                >
+                </app-text-area-plain>
+            </fieldset>
         </transition-group>
 
-        <app-form-navigation v-if="steps.current < steps.total"
-                             :steps="steps"
-                             :errors="errors"
+        <app-multi-step-form-navigation v-if="!isLastStep()"
+                :steps="steps"
+                :errors="errors"
+                @movedForward="stepUp"
+                @movedBackward="stepDown"
         >
-        </app-form-navigation>
-        <app-form-navigation v-else
-                             :steps="steps"
-                             :errors="errors"
-                             :content="{
+        </app-multi-step-form-navigation>
+        <app-multi-step-form-navigation v-else
+             :steps="steps"
+             :errors="errors"
+             :content="{
                     prev: 'components/form-navigation.previous',
-                    next: 'components/form-navigation.create'
-                }"
-                             @finish="submit"
+                    next: 'components/form-navigation.update'
+            }"
+            @movedForward="submit"
+            @movedBackward="stepDown"
         >
-        </app-form-navigation>
+        </app-multi-step-form-navigation>
     </form>
 </template>
 
 <script>
     import axios from "axios";
     import validatorMixin from '../../mixins/validator';
+    import stepableMixin from "../../mixins/stepable";
     import { mapGetters, mapActions, mapMutations } from 'vuex';
 
     import AppTextInput from '../inputs/AppTextInput';
     import AppPillsInput from "../inputs/AppPillsInput";
+    import AppOneStepFormNavigation from "../navigators/AppOneStepFormNavigation";
 
     export default {
         name: "AppCollectionsEdit",
 
         components: {
+            AppOneStepFormNavigation,
             AppTextInput
         },
 
         computed: {
             ...mapGetters({
                 tags: 'tag/tags',
-                errors: 'collection/errors'
+                errors: 'error/errors'
             }),
         },
 
         mixins: [
-            validatorMixin
+            validatorMixin,
+            stepableMixin
         ],
 
         props: {
@@ -98,32 +123,78 @@
             }
         },
 
+        watch: {
+            errors(errors) {
+                if (this.anyErrors()) {
+                    this.stepFailed();
+                }
+            }
+        },
+
         methods: {
             ...mapActions({
                 getTags: 'tag/getTags',
-                hasErrors: 'collection/hasErrors'
+                pushTags: 'tag/push',
+                hasErrors: 'error/has',
+                pushErrors: 'error/push',
+                pullErrors: 'error/pullErrors',
+                setErrors: 'error/setErrors',
+                unsetError: 'error/unsetError',
+                setError: 'error/set',
+                pullError: 'error/pull',
             }),
 
-            ...mapMutations({
-                PUSH_TAGS: 'tag/PUSH_TAGS',
-                SET_ERRORS: 'collection/SET_ERRORS',
-                ADD_ERROR: 'collection/ADD_ERROR'
-            }),
+            pushCreatedTagPill(payload, field) {
+                this['push' + this.$_.upperFirst(field)](payload);
+                this.unsetError(field);
+            },
+
+            updateTagPills(payload, field) {
+                this.form[field] = payload;
+                //this.validate([field]);
+            },
+
+            displayTagPillsErrors(payload, field) {
+                if (payload.hasOwnProperty('name')) {
+                    this.setError({
+                        value: payload.name,
+                        key: field
+                    });
+
+                    this.getTags();
+                }
+            },
 
             setValues: function() {
-                this.form.name = this.collection.data[0].name;
+                this.$set(this.form, 'name', this.collection.name);
 
-                if (Object.keys(this.collection.data[0].tags).length > 0) {
-                    this.$_.forEach(this.collection.data[0].tags, (value) => {
-                        this.form.tags.push(value.id)
+                if (Object.keys(this.collection.tags).length > 0) {
+                    this.$_.forEach(this.collection.tags, (value, index) => {
+                        if (!this.form.tags) {
+                            this.$set(this.form, 'tags', []);
+                        }
+
+                        this.$set(this.form.tags, index, value.id);
                     });
                 }
+
+                this.$set(this.form, 'description', this.collection.description)
+            },
+
+            submit: function() {
+                if (this.anyErrors()) {
+                    return false;
+                }
+
+                this.$el.submit();
             },
         },
 
-        beforeMount() {
-            this.setValues();
+        async beforeMount() {
             this.getTags();
+            this.setValues();
+            console.log(this.collection.tags);
+            console.log(this.form.tags);
         }
     }
 </script>

@@ -1,0 +1,128 @@
+.accordion-list {
+  font-size: 1.125em;
+  margin: 0 auto 5px auto;
+
+  &__item {
+    @include flexbox();
+    background-color: get-color(clouds);
+    margin-bottom: 5px;
+
+    &-wrapper {
+      margin-bottom: 0;
+      float: none;
+      position: relative;
+      width: 100%;
+    }
+
+    input[type=checkbox] {
+      border: 0;
+      cursor: pointer;
+      height: 100%;
+
+      // Android Browser Support
+      min-height: 100%;
+      min-width: 100%;
+      left: 0;
+      position: absolute;
+      outline: 0;
+      opacity: 0;
+      width: 100%;
+      z-index: 1;
+
+      &:checked {
+        &~.accordion-list__item-panel, &+.accordion-list__item-panel {
+          height: 0;
+          opacity: 0;
+          @include prefix((transform: translateZ(0)), moz webkit);
+          @include transition(height .4s ease-in-out);
+          padding: 0;
+        }
+      }
+    }
+
+    // Heading
+
+    &-heading {
+      @include flexbox();
+      height: 120px;
+      width: 100%;
+      padding: 1.125em;
+    }
+
+    &-info {
+      @include flexbox();
+      @include flex-wrap(wrap);
+      width: 100%;
+    }
+
+    &-handle {
+      @include flexbox();
+      @include align-items(center);
+
+      svg {
+        @extend %rounded-background;
+        background-color: get-color(clouds, lighter);
+        color: get-color(shadow);
+      }
+    }
+
+    &-title {
+      width: 100%;
+      color: get-color(taunt);
+    }
+
+    &-time {
+      color: get-color(boognish);
+      font-size: 0.875em;
+      @include align-self(end);
+      flex: 60%;
+    }
+
+    &-scoreboard {
+      @include flexbox();
+      @include justify-content(flex-end);
+      padding: 0 .5em;
+      flex: 40%;
+
+      &__scoring {
+        margin: 0 2.5px;
+        display: inherit;
+        @include align-self(end);
+        @include align-items(end);
+
+        &:first-of-type {
+          color: get-color(success);
+        }
+
+        &:last-of-type {
+          color: get-color(failed);
+        }
+
+        span {
+          width: 33px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+
+    // Panel
+
+    &-panel {
+      @include transition(height 0.4s ease-out, opacity 0.4s ease-out);
+      height: 700px;
+      background-color: get-color(clouds, lighter);
+      color: get-color(shadow);
+      position: relative;
+      opacity: 1;
+      padding: 1.125em;
+      @include prefix((transform: translateZ(0)));
+    }
+
+    &-action {
+
+    }
+  }
+}
+
+// Transitions
